@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="The Everest Terminal" activePage="home">
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Welcome to The Everest Terminal...<br/>
+        Where software, systems, and curiosity run in production.</p>
+      <h1 class="hero-name">
+        Hi, I'm<br/>
+        <em>Everest K C</em>
+      </h1>
+      <p class="hero-bio">
+        I build the infrastructure that keeps software running at scale —
+        reliable pipelines, observable systems, and the automation that
+        turns toil into trust.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn btn-primary">Get in touch →</a>
+        <a href="/talks" class="btn btn-outline">Talks & writing</a>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <div class="hero-photo-frame">
+          <img src="/photo.jpg" alt="Everest K C" />
+        <!--
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="22" r="12" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p>Add your photo here</p>
+        </div>
+        -->
+      </div>
+      <div class="hero-photo-badge">
+        <strong>6+ years</strong>
+        Software Engineer, DevOps Engineer
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="about">
+    <p class="section-label">About me</p>
+
+    <div class="about-grid">
+      <h2 class="about-headline">
+        Building systems<br/>
+        that scale without<br/>
+        <em>breaking things.</em>
+      </h2>
+
+      <div class="about-body">
+        <p>
+          I'm a Site Reliability and DevOps engineer with a deep interest in
+          taming complexity — turning brittle deployments into resilient
+          pipelines and manual toil into reliable automation. Good infrastructure
+          should be invisible to the teams that depend on it.
+        </p>
+        <p>
+          I've worked across the stack, from writing application code to
+          designing the cloud architecture it runs on. I care about uptime,
+          developer experience, and keeping systems honest through meaningful
+          observability and clear runbooks.
+        </p>
+        <p>
+          When I'm not tracing a production incident or deep in Terraform,
+          I'm exploring the cloud-native ecosystem, speaking at meetups, and
+          looking for the next interesting problem to automate away.
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-item">
+            <p class="skill-item-label">Focus</p>
+            <p class="skill-item-value">SRE & Platform Eng</p>
+          </div>
+          <div class="skill-item">
+            <p class="skill-item-label">Stack</p>
+            <p class="skill-item-value">K8s · Terraform · Go</p>
+          </div>
+          <div class="skill-item">
+            <p class="skill-item-label">Cloud</p>
+            <p class="skill-item-value">AWS · GCP · Azure</p>
+          </div>
+          <div class="skill-item">
+            <p class="skill-item-label">Currently</p>
+            <p class="skill-item-value">Open to work</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

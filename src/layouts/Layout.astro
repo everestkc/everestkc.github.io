@@ -1,0 +1,131 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  activePage?: string;
+}
+
+const { title, description = "Personal website", activePage = '' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script is:inline>
+    const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  </script>
+</head>
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">The Everest Terminal</a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/" id="nav-home" class={activePage === 'home' ? 'active' : ''}>Home</a></li>
+        <li><a href="/#about" id="nav-about">About</a></li>
+        <li><a href="/blog" class={activePage === 'blog' ? 'active' : ''}>Blog</a></li>
+        <li><a href="/talks" class={activePage === 'talks' ? 'active' : ''}>Talks</a></li>
+        <li><a href="/contact" class={activePage === 'contact' ? 'active' : ''}>Contact</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <span class="toggle-track">
+          <span class="toggle-thumb">
+            <span class="toggle-icon toggle-icon-sun">☀︎</span>
+            <span class="toggle-icon toggle-icon-moon">☽</span>
+          </span>
+        </span>
+      </button>
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div id="mobile-menu" style="display:none; padding: 1rem 2rem 1.5rem; border-top: 1px solid var(--border);">
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:2px;">
+        <li><a href="/" style="display:block; padding:0.6rem 0.85rem; border-radius:3px; font-size:0.875rem; color:var(--text-secondary);">Home</a></li>
+        <li><a href="/#about" style="display:block; padding:0.6rem 0.85rem; border-radius:3px; font-size:0.875rem; color:var(--text-secondary);">About</a></li>
+        <li><a href="/blog" style="display:block; padding:0.6rem 0.85rem; border-radius:3px; font-size:0.875rem; color:var(--text-secondary);">Blog</a></li>
+        <li><a href="/talks" style="display:block; padding:0.6rem 0.85rem; border-radius:3px; font-size:0.875rem; color:var(--text-secondary);">Talks</a></li>
+        <li><a href="/contact" style="display:block; padding:0.6rem 0.85rem; border-radius:3px; font-size:0.875rem; color:var(--text-secondary);">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-copy">© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://twitter.com/babueverest" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://linkedin.com/in/babueverest" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/everestkc" target="_blank" rel="noopener">GitHub</a>
+        <a href="/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<script>
+  const html = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+
+  const saved = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  html.setAttribute('data-theme', saved);
+
+  toggle?.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.style.display !== 'none';
+    if (mobileMenu) mobileMenu.style.display = isOpen ? 'none' : 'block';
+  });
+
+  if (window.location.pathname === '/') {
+    const homeLink = document.getElementById('nav-home');
+    const aboutLink = document.getElementById('nav-about');
+    const aboutSection = document.getElementById('about');
+
+    function setActiveNav(active: 'home' | 'about') {
+      homeLink?.classList.toggle('active', active === 'home');
+      aboutLink?.classList.toggle('active', active === 'about');
+    }
+
+    // Set initial state from hash
+    setActiveNav(window.location.hash === '#about' ? 'about' : 'home');
+
+    if (aboutSection) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setActiveNav(entry.isIntersecting ? 'about' : 'home');
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(aboutSection);
+    }
+  }
+</script>

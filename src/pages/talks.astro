@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const events = [
+  {
+    event: "PyCon US 2026",
+    location: "Long Beach, CA",
+    date: "May 2026",
+    talks: [
+      {
+        title: "DIY NFC for Networking at Conferences",
+        type: "Lightning Talk",
+        slides: "https://docs.google.com/presentation/d/12koFWDB5O-XrwUJeZOpkN6YTqJR6DvGr/view",
+        video: "",
+        poster: "",
+        description: "A talk on using low-cost NFC stickers or cards to make conference networking faster, easier, and more flexible than traditional business cards or static QR codes.",
+      },
+      {
+        title: "From Chaos to Clarity: Automating History Clean-Up and Mono-Repo Migration with git-filter-repo",
+        type: "Poster Presentation",
+        slides: "",
+        video: "",
+        poster: "https://drive.google.com/file/d/1yIQgsoNpB_XbDGXxw65IsnbhJAdL9Po3/view",
+        description: "A practical automation approach for cleaning messy Git histories and migrating multiple repositories into a cleaner, auditable mono-repo using git-filter-repo and Python callbacks.",
+      },
+    ],
+  },
+  {
+    event: "Open Source Summit North America 2025",
+    location: "Denver, CO",
+    date: "June 2025",
+    talks: [
+      {
+        title: "Learning by Contributing: My Journey through the Linux Kernel Bug Fixing Mentorship",
+        type: "Poster Presentation",
+        slides: "",
+        video: "",
+        poster: "https://drive.google.com/file/d/1qOVTjHNP1egWuTOpwmgnoRJ6JZPb8WRN/view",
+        description: "My story of how I learned deeper about linux kernel by participating in LFX Linux Kernel Bugfixing mentorship program.",
+      },
+    ],
+  },
+];
+---
+
+<Layout title="Talks — Your Name" description="Conference talks, workshops, and presentations." activePage="talks">
+
+  <div class="page-header">
+    <p class="page-header-label">Public speaking</p>
+    <h1>Talks &amp; Presentations</h1>
+    <p>
+      Sharing ideas at conferences, meetups, and workshops. Slides and recordings where available.
+    </p>
+  </div>
+
+  <div class="talks-timeline">
+    {events.map(ev => (
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">{ev.date}</span>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h2 class="timeline-event-name">{ev.event}</h2>
+          <p class="timeline-location">{ev.location}</p>
+          <div class="timeline-talks">
+            {ev.talks.map(talk => (
+              <div class="timeline-talk">
+                <span class="timeline-type">{talk.type}</span>
+                {talk.title && <h3 class="timeline-title">{talk.title}</h3>}
+                <p class="timeline-description">{talk.description}</p>
+                <div class="timeline-links">
+                  {talk.slides && (
+                    <a href={talk.slides} target="_blank" rel="noopener" class="talk-link">↗ Slides</a>
+                  )}
+                  {talk.video && (
+                    <a href={talk.video} target="_blank" rel="noopener" class="talk-link">▶ Video</a>
+                  )}
+                  {talk.poster && (
+                    <a href={talk.poster} target="_blank" rel="noopener" class="talk-link">⊡ Poster</a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="invite-section">
+    <div class="invite-inner">
+      <div>
+        <h2>Invite me to speak</h2>
+        <p>
+          I'm always open to speaking opportunities on topics I care about.
+          Reach out and let's talk.
+        </p>
+      </div>
+      <a href="/contact" class="btn btn-primary">Get in touch →</a>
+    </div>
+  </div>
+
+</Layout>
